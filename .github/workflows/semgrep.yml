@@ -1,0 +1,22 @@
+name: SemGrep Code Scan
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  semgrep:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Run SemGrep
+        uses: returntocorp/semgrep-action@v1
+        with:
+          config: "p/default"  # Use default security rules
+          publishToken: ${{ secrets.SEMGREP_APP_TOKEN }}  # Optional: For reporting results to SemGrep App
